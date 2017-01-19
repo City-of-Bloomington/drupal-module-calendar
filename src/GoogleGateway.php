@@ -5,6 +5,8 @@
  */
 namespace Drupal\calendar;
 
+use Drupal\Core\Site\Settings;
+
 class GoogleGateway
 {
     private static function getClient()
