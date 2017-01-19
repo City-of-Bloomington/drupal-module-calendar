@@ -1,0 +1,30 @@
+{#
+/**
+ * @file
+ * Displays upcoming events from a Google Calendar
+ *
+ * Available variables
+ * - events: \Google_Service_Calendar_EventList
+ *
+ * @copyright 2017 City of Bloomington, Indiana
+ * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE.txt
+ */
+#}
+<section>
+    <header>
+        <h1>Events</h1>
+    </header>
+    {% if events %}
+    <ol>{% for event in events %}
+        <li>{% if event.start.dateTime %}
+            {{ event.start.dateTime }}
+            {% else %}
+            {{ event.start.date }}
+            {% endif %}
+
+            {{ event.summary }}
+        </li>
+        {% endfor %}
+    </ol>
+    {% endif %}
+</section>
