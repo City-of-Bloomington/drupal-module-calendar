@@ -26,9 +26,10 @@ function calendar_theme()
 {
     return [
         'calendar_events'=> [
-            'template' => 'calendar_events',
+            'template'  => 'calendar_events',
             'variables' => [
-                'events' => []
+                'events'     => [],
+                'calendarId' => ''
             ]
         ]
     ];

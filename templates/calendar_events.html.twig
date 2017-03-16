@@ -5,26 +5,42 @@
  *
  * Available variables
  * - events: \Google_Service_Calendar_EventList
+ * - calendarId: Google Calendar ID
  *
+ * @see https://developers.google.com/google-apps/calendar/v3/reference/events
  * @copyright 2017 City of Bloomington, Indiana
  * @license http://www.gnu.org/licenses/agpl.txt GNU/AGPL, see LICENSE.txt
  */
 #}
-<section>
+{% for event in events %}
+<article>
     <header>
-        <h1>Events</h1>
+        {% if event.start.dateTime %}
+        <time datetime="{{ event.start.dateTime }}">
+            <div class="month"    >{{ event.start.dateTime | date('M')}}</div>
+            <div class="monthDate">{{ event.start.dateTime | date('j')}}</div>
+            <div class="weekday"  >{{ event.start.dateTime | date('l')}}</div>
+        </time>
+        {% else %}
+        <time datetime="{{ event.start.date }}">
+            <div class="month"    >{{ event.start.date     | date('M')}}</div>
+            <div class="monthDate">{{ event.start.date     | date('j')}}</div>
+            <div class="weekday"  >{{ event.start.date     | date('l')}}</div>
+        </time>
+        {% endif %}
     </header>
-    {% if events %}
-    <ol>{% for event in events %}
-        <li>{% if event.start.dateTime %}
-            {{ event.start.dateTime }}
-            {% else %}
-            {{ event.start.date }}
+    <div>
+        {% if event.start.dateTime %}
+        <time datetime="{{ event.start.dateTime }}">
+            {{  event.start.dateTime | date('g:ia') }}
+            {% if event.end.dateTime %}
+            to {{ event.end.dateTime | date('g:ia') }}
             {% endif %}
-
-            {{ event.summary }}
-        </li>
-        {% endfor %}
-    </ol>
-    {% endif %}
-</section>
+        </time>
+        {% endif %}
+        <div class="summary" >{{ event.summary  }}</div>
+        <div class="location">{{ event.location }}</div>
+    </div>
+</article>
+{% endfor %}
+<a href="https://calendar.google.com/calendar/embed?src={{ calendarId }}&ctz=America/New_York" class="button">Visit Google Calendar</a>
