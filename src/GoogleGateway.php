@@ -14,7 +14,8 @@ class GoogleGateway
         static $client = null;
 
         if (!$client) {
-            $GOOGLE_USER_EMAIL = Settings::get('google_user_email');
+            $config = \Drupal::config('calendar.settings');
+            $GOOGLE_USER_EMAIL = $config->get('google_user_email');
 
             $client = new \Google_Client();
             $client->setAuthConfig(\Drupal::service('site.path').'/credentials.json');
