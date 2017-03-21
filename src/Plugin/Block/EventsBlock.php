@@ -45,16 +45,18 @@ class EventsBlock extends BlockBase implements BlockPluginInterface
                 $end   = new \DateTime();
                 $end->add(new \DateInterval("P{$numdays}D"));
 
-                $events = GoogleGateway::events($id, $start, $end);
+                $events  = GoogleGateway::events($id, $start, $end);
+                $display = [];
+                $count   = 0;
                 foreach ($events as $e) {
-                    $n = [];
+                    if (++$count > $maxevents) { break; }
 
-
+                    $display[] = $e;
                 }
 
                 return [
                     '#theme'      => 'calendar_events',
-                    '#events'     => $events,
+                    '#events'     => $display,
                     '#calendarId' => $id
                 ];
             }
