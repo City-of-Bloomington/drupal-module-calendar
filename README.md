@@ -45,9 +45,9 @@ This module is a "Server-to-Server" application;  Drupal will be making requests
 a user you specify in the module's settings. You will want to read up
 on how to set up OAuth 2.0 for your Google Service Account.
 
-https://developers.google.com/identity/protocols/OAuth2ServiceAccount
-https://developers.google.com/google-apps/calendar/quickstart/php
-https://developers.google.com/api-client-library/php/auth/service-accounts
+* https://developers.google.com/identity/protocols/OAuth2ServiceAccount
+* https://developers.google.com/google-apps/calendar/quickstart/php
+* https://developers.google.com/api-client-library/php/auth/service-accounts
 
 Once you have a credentials.json file with your private key, you must place the file
 in your Drupal installation's /web/sites/default, next to settings.php.
