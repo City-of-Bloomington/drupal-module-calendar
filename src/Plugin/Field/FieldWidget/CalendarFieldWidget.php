@@ -10,7 +10,7 @@ use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * A widget bar.
+ * Form input for a Google Calendar ID.
  *
  * @FieldWidget(
  *   id = "calendar_calendarfield",
