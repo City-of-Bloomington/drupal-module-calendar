@@ -29,6 +29,8 @@
 #}
 <div class="events">
 {% for event in events %}
+{% set url = event.description|preg_get('|https?://[-a-z0-9\+\./\?\;=_]+|') %}
+{%  if url %}<a href="{{ url }}">{% endif %}
 <article>
     <header>
         {% if event.start.dateTime %}
@@ -58,6 +60,7 @@
         <div class="location">{{ event.location }}</div>
     </div>
 </article>
+{% if url %}</a>{% endif %}
 {% endfor %}
 </div>
 <div>
