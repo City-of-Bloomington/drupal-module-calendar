@@ -1,7 +1,5 @@
 ## Drupal Calendar Module
 
-Drupal module to render Google Calendar Events as a block
-
 Google Calendars are an easy way for people to manage events on a calendar. Rather than reinvent that wheel, this Drupal module allows events from Google Calendar to be integrated with a content node in your Drupal instance. 
 
 [Calendar Aggregator](https://github.com/City-of-Bloomington/calendar-aggregator) is a related project that is useful to combine multiple Google Calendars into one.
