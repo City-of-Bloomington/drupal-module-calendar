@@ -35,15 +35,15 @@
     <header>
         {% if event.start.dateTime %}
         <time datetime="{{ event.start.dateTime }}">
-            <div class="month"    >{{ event.start.dateTime | date('M')}}</div>
-            <div class="monthDate">{{ event.start.dateTime | date('j')}}</div>
-            <div class="weekday"  >{{ event.start.dateTime | date('l')}}</div>
+            <span class="month"    >{{ event.start.dateTime | date('M')}}</span>
+            <span class="monthDate">{{ event.start.dateTime | date('j')}}</span>
+            <span class="weekday"  >{{ event.start.dateTime | date('l')}}</span>
         </time>
         {% else %}
         <time datetime="{{ event.start.date }}">
-            <div class="month"    >{{ event.start.date     | date('M')}}</div>
-            <div class="monthDate">{{ event.start.date     | date('j')}}</div>
-            <div class="weekday"  >{{ event.start.date     | date('l')}}</div>
+            <span class="month"    >{{ event.start.date     | date('M')}}</span>
+            <span class="monthDate">{{ event.start.date     | date('j')}}</span>
+            <span class="weekday"  >{{ event.start.date     | date('l')}}</span>
         </time>
         {% endif %}
     </header>
