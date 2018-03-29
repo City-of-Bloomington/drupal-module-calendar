@@ -89,18 +89,10 @@ class EventsList extends FormatterBase
         foreach ($items as $i=>$item) {
             $calendarId  = trim($item->calendarId);
             if ($calendarId) {
-                $events  = GoogleGateway::events($calendarId, $start, $end);
-                $display = [];
-                $count   = 0;
-                foreach ($events as $e) {
-                    if (++$count > $maxevents) { break; }
-
-                    $display[] = $e;
-                }
-
+                $events  = GoogleGateway::limitEvents(GoogleGateway::events($calendarId, $start, $end), $maxevents);
                 $elements[$i] = [
                     '#theme'      => 'calendar_events',
-                    '#events'     => $display,
+                    '#events'     => $events,
                     '#calendarId' => $item->calendarId
                 ];
             }

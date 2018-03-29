@@ -69,4 +69,16 @@ class GoogleGateway
         $events = $service->events->listEvents($calendarId, $opts);
         return $events;
     }
+
+    public static function limitEvents(\Google_Service_Calendar_Events $events, int $maxevents): array
+    {
+        $display = [];
+        $count   = 0;
+        foreach ($events as $e) {
+            if (++$count > $maxevents) { break; }
+
+            $display[] = $e;
+        }
+        return $display;
+    }
 }
