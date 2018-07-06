@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2017 City of Bloomington, Indiana
+ * @copyright 2017-2018 City of Bloomington, Indiana
  * @license https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU/GPL2, see LICENSE
  *
  * This file is part of the Google Calendar drupal module.
@@ -28,12 +28,16 @@ use Drupal\Core\Form\FormStateInterface;
 
 /**
  * @Block(
- *     id = "events_block",
- *     admin_label = "Upcoming Events",
- *     context = {
- *         "node" = @ContextDefinition("entity:node")
- *     }
- * )
+ *    id = "events_block",
+ *    admin_label = "Upcoming Events",
+ *    context = {
+ *        "node" = @ContextDefinition(
+ *            "entity:node",
+ *            label = "Current Node",
+ *            required = FALSE
+ *        )
+ *    }
+ *)
  */
 class EventsBlock extends BlockBase implements BlockPluginInterface
 {
@@ -46,34 +50,39 @@ class EventsBlock extends BlockBase implements BlockPluginInterface
      */
     public function build()
     {
-        $config = $this->getConfiguration();
         $node   = $this->getContextValue('node');
+        if ($node) {
+            $config    = $this->getConfiguration();
+            $fieldname = !empty($config['fieldname']) ?      $config['fieldname'] : self::DEFAULT_FIELDNAME;
+            $numdays   = !empty($config['numdays'  ]) ? (int)$config['numdays'  ] : self::DEFAULT_NUMDAYS;
+            $maxevents = !empty($config['maxevents']) ? (int)$config['maxevents'] : self::DEFAULT_MAXEVENTS;
 
-        $fieldname = !empty($config['fieldname']) ?      $config['fieldname'] : self::DEFAULT_FIELDNAME;
-        $numdays   = !empty($config['numdays'  ]) ? (int)$config['numdays'  ] : self::DEFAULT_NUMDAYS;
-        $maxevents = !empty($config['maxevents']) ? (int)$config['maxevents'] : self::DEFAULT_MAXEVENTS;
+            if ($node->hasField( $fieldname)) {
+                $id = $node->get($fieldname)->value;
+                if ($id) {
+                    $start = new \DateTime();
+                    $end   = new \DateTime();
+                    $end->add(new \DateInterval("P{$numdays}D"));
 
-        if ($node->hasField( $fieldname)) {
-            $id = $node->get($fieldname)->value;
-            if ($id) {
-                $start = new \DateTime();
-                $end   = new \DateTime();
-                $end->add(new \DateInterval("P{$numdays}D"));
+                    $events  = GoogleGateway::events($id, $start, $end);
+                    $display = [];
+                    $count   = 0;
+                    foreach ($events as $e) {
+                        if (++$count > $maxevents) { break; }
 
-                $events  = GoogleGateway::events($id, $start, $end);
-                $display = [];
-                $count   = 0;
-                foreach ($events as $e) {
-                    if (++$count > $maxevents) { break; }
+                        $display[] = $e;
+                    }
 
-                    $display[] = $e;
+                    return [
+                        '#theme'      => 'calendar_events',
+                        '#events'     => $display,
+                        '#calendarId' => $id,
+                        '#cache'       => [
+                            'contexts' => ['route'],
+                            'max-age'  => 3600
+                        ]
+                    ];
                 }
-
-                return [
-                    '#theme'      => 'calendar_events',
-                    '#events'     => $display,
-                    '#calendarId' => $id
-                ];
             }
         }
     }
