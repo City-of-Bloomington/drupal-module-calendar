@@ -24,7 +24,9 @@ use Drupal\calendar\GoogleGateway;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Block\BlockPluginInterface;
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\Entity\Node;
 
 /**
  * @Block(
@@ -45,13 +47,15 @@ class EventsBlock extends BlockBase implements BlockPluginInterface
     const DEFAULT_NUMDAYS   = 7;
     const DEFAULT_MAXEVENTS = 4;
 
-    /**
-     * {@inheritdoc}
-     */
+    public function getCacheContexts()
+    {
+        return Cache::mergeContexts(parent::getCacheContexts(), ['url.path']);
+    }
+
     public function build()
     {
-        $node   = $this->getContextValue('node');
-        if ($node) {
+        $node = $this->getContextValue('node');
+        if ($node && $node instanceof Node) {
             $config    = $this->getConfiguration();
             $fieldname = !empty($config['fieldname']) ?      $config['fieldname'] : self::DEFAULT_FIELDNAME;
             $numdays   = !empty($config['numdays'  ]) ? (int)$config['numdays'  ] : self::DEFAULT_NUMDAYS;
@@ -78,7 +82,6 @@ class EventsBlock extends BlockBase implements BlockPluginInterface
                         '#events'     => $display,
                         '#calendarId' => $id,
                         '#cache'       => [
-                            'contexts' => ['route'],
                             'max-age'  => 3600
                         ]
                     ];
