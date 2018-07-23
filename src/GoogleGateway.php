@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2017 City of Bloomington, Indiana
+ * @copyright 2017-2018 City of Bloomington, Indiana
  * @license https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU/GPL2, see LICENSE
  *
  * This file is part of the Google Calendar drupal module.
@@ -49,7 +49,7 @@ class GoogleGateway
      * @param  int      $maxResults
      * @return Google_Service_Calendar_EventList
      */
-    public static function events($calendarId, \DateTime $start=null, \DateTime $end=null, $singleEvents=true, $maxResults=null)
+    public static function events($calendarId, \DateTime $start=null, \DateTime $end=null, $singleEvents=true, ?int $maxResults=null)
     {
         $FIELDS = 'description,end,endTimeUnspecified,htmlLink,id,location,'
                 . 'originalStartTime,recurrence,recurringEventId,sequence,'
@@ -66,7 +66,7 @@ class GoogleGateway
         if ($end  ) { $opts['timeMax'] = $end  ->format(\DateTime::RFC3339); }
 
         $service = new \Google_Service_Calendar(self::getClient());
-        $events = $service->events->listEvents($calendarId, $opts);
+        $events  = $service->events->listEvents($calendarId, $opts);
         return $events;
     }
 
