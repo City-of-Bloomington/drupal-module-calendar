@@ -1,8 +1,9 @@
 ---
-name: Calendar
-description: Displays events from Google Calendars
-package: COB
-type: module
-core: 8.x
-configure: calendar.settings
+name:        'Calendar'
+description: 'Displays events from Google Calendars'
+package:     'COB'
+type:        'module'
+core:        '8.x'
+configure:   'calendar.settings'
+core_version_requirement: '^8||^9'
 ...
