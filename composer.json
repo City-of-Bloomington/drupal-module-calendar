@@ -1,5 +1,5 @@
 {
-    "name": "City-of-Bloomington/drupal-module-calendar",
+    "name": "city-of-bloomington/calendar",
     "type": "drupal-module",
     "description": "Drupal module for displaying events from Google Calendars",
     "require": {
