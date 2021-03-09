@@ -41,6 +41,16 @@ class GoogleGateway
     }
 
     /**
+     * @see https://developers.google.com/calendar/v3/reference/events/get
+     * @throws \Google_Service_Exception
+     */
+    public static function event(string $calendar_id, string $event_id): \Google_Service_Calendar_Event
+    {
+        $service = new \Google_Service_Calendar(self::getClient());
+        return $service->events->get($calendar_id, $event_id);
+    }
+
+    /**
      * @see https://developers.google.com/google-apps/calendar/v3/reference/events/list
      * @param  string   $calendarId
      * @param  DateTime $start
