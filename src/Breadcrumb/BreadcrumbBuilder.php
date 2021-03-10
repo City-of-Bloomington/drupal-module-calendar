@@ -35,12 +35,12 @@ class BreadcrumbBuilder implements BreadcrumbBuilderInterface
         }
         if ($route == 'calendar.event_view') {
             try {
-                $id  = $route_match->getParameter('calendar_id');
-                $cal = GoogleGateway::calendar($id);
-                $uri = "https://calendar.google.com/calendar/embed?src=$id&ctz=America/New_York";
-                $url = Url::fromUri($uri, ['absolute' => true, 'https' => true]);
-                $breadcrumb->addLink(Link::fromTextAndUrl($cal->summary, $url));
-
+                $calendar_id = $route_match->getParameter('calendar_id');
+                $event_id    = $route_match->getParameter(   'event_id');
+                $event       = GoogleGateway::event($calendar_id, $event_id);
+                $uri         = "https://calendar.google.com/calendar/embed?src={$event->organizer->email}&ctz=America/New_York";
+                $url         = Url::fromUri($uri, ['absolute' => true, 'https' => true]);
+                $breadcrumb->addLink(Link::fromTextAndUrl($event->organizer->displayName, $url));
             }
             catch (\Exception $e) { }
         }
