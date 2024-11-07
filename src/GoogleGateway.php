@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2017-2021 City of Bloomington, Indiana
+ * @copyright 2017-2024 City of Bloomington, Indiana
  * @license https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU/GPL2, see LICENSE
  */
 namespace Drupal\calendar;
@@ -18,7 +18,7 @@ class GoogleGateway
             $GOOGLE_USER_EMAIL = $config->get('google_user_email');
 
             $client = new \Google_Client();
-            $client->setAuthConfig(\Drupal::service('site.path').'/credentials.json');
+            $client->setAuthConfig(\Drupal::getContainer()->getParameter('site.path').'/credentials.json');
             $client->setScopes([\Google_Service_Calendar::CALENDAR_READONLY]);
             $client->setSubject($GOOGLE_USER_EMAIL);
         }
