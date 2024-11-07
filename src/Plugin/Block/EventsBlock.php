@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2017-2018 City of Bloomington, Indiana
+ * @copyright 2017-2024 City of Bloomington, Indiana
  * @license https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU/GPL2, see LICENSE
  *
  * This file is part of the Google Calendar drupal module.
@@ -32,7 +32,7 @@ use Drupal\node\Entity\Node;
  * @Block(
  *    id = "events_block",
  *    admin_label = "Upcoming Events",
- *    context = {
+ *    context_definitions = {
  *        "node" = @ContextDefinition(
  *            "entity:node",
  *            label = "Current Node",
