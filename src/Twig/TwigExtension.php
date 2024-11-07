@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2017 City of Bloomington, Indiana
+ * @copyright 2017-2024 City of Bloomington, Indiana
  * @license https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU/GPL2, see LICENSE
  *
  * This file is part of the Google Calendar drupal module.
@@ -20,14 +20,14 @@
  */
 namespace Drupal\calendar\Twig;
 
-class TwigExtension extends \Twig_Extension
+class TwigExtension extends \Twig\Extension\AbstractExtension
 {
     public function getName() { return 'calendar.twig_extension'; }
 
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('preg_get', [$this, 'get'])
+            new \Twig\TwigFilter('preg_get', [$this, 'get'])
         ];
     }
 
